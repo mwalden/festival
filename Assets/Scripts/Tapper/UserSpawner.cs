@@ -40,4 +40,14 @@ public class UserSpawner : MonoBehaviour
         timerBeforeSpawn = time;
         timeLeft = timerBeforeSpawn;
     }
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        print("colliding");
+        if (collision.GetComponent<UserScript>() != null && collision.GetComponent<UserScript>().hasTrack == false)
+            return;
+        else
+            Destroy(collision.gameObject);
+    }
 }

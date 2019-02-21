@@ -22,6 +22,11 @@ public class GameController : MonoBehaviour
     {
         currentLevel = 0;
         currentTimeLeft = levelTime[0];
+        foreach (GameObject spawner in userSpawners)
+        {
+            spawner.GetComponent<UserSpawner>().userSpeed = speedRatesPerLevel[currentLevel];
+            spawner.GetComponent<UserSpawner>().setTimerBeforeSpawn(spawnRatesByLevel[currentLevel]);
+        }
     }
     private void Update()
     {

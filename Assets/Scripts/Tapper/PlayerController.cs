@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
             if (currentHoldingTrack)
             {
                 holdingTrack.transform.position = new Vector2(holdingTrack.transform.position.x, points[currentPoint].GetComponentInParent<Laptop>().transform.position.y);
-                holdingTrack.GetComponent<Rigidbody2D>().velocity = new Vector2(4, 0);
+                holdingTrack.GetComponent<Rigidbody2D>().velocity = new Vector2(5, 0);
             }
             currentHoldingTrack = false;
         }
