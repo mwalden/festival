@@ -35,7 +35,7 @@ public class GameController : MonoBehaviour
     }
     private void Update()
     {
-        if (currentLevel == 4) {
+        if (currentLevel == 5) {
             print("Game done");
             return;
         }
@@ -53,6 +53,13 @@ public class GameController : MonoBehaviour
             }
             currentTimeDelay = 100000;
             openUI();
+            UserScript[] users = GameObject.FindObjectsOfType<UserScript>();
+            int count = users.Length;
+            for(int x =0;x < count; x++)
+            {
+                DestroyImmediate(users[x].gameObject);
+            }
+
         }
     }
     public void openUI()
