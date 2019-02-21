@@ -17,11 +17,13 @@ public class GameController : MonoBehaviour
     [Tooltip("The time that user spawns are delayed between levels")]
     public float timeDelay;
     public float currentTimeDelay;
+    private TapperUI ui;
 
     private void Start()
     {
         currentLevel = 0;
         currentTimeLeft = levelTime[0];
+        ui = GetComponent<TapperUI>();
         foreach (GameObject spawner in userSpawners)
         {
             spawner.GetComponent<UserSpawner>().userSpeed = speedRatesPerLevel[currentLevel];
@@ -58,7 +60,12 @@ public class GameController : MonoBehaviour
             {
                 spawner.GetComponent<UserSpawner>().setTimerBeforeSpawn(100000);
             }
-            currentTimeDelay = timeDelay;
+            currentTimeDelay = 100000;
         }
+    }
+
+    public void closeUI()
+    {
+
     }
 }
