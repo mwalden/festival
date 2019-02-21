@@ -8,6 +8,7 @@ public class TrackScript : MonoBehaviour
     public Sprite sprite;
     private SpriteRenderer spriteRenderer;
     public bool skipped;
+    public AudioClip[] skipSounds;
 
     // Start is called before the first frame update
     void Start()

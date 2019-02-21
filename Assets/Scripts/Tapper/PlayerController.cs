@@ -13,11 +13,18 @@ public class PlayerController : MonoBehaviour
     private GameObject holdingTrack;
     private IEnumerator coroutine;
     public bool currentHoldingTrack;
+    public AudioSource audioSource;
+    public AudioClip[] downloadSounds;
+
+    private int audioNumber;
+    [Tooltip("this value * 10 for the skip chance percentage")]
+    public int skipChancePercentage;
 
     // Start is called before the first frame update
     void Start()
     {
         player.transform.position = points[0].transform.position;
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -47,6 +54,11 @@ public class PlayerController : MonoBehaviour
         {
             holdingTime = 0;
             StopAllCoroutines();
+            audioSource.clip = downloadSounds[audioNumber];
+            audioNumber++;
+            audioSource.Play();
+            if (audioNumber >= downloadSounds.Length - 1)
+                audioNumber = 0;
             if (!currentHoldingTrack && holdingTrack != null)
             {
                 Destroy(holdingTrack);
@@ -68,7 +80,10 @@ public class PlayerController : MonoBehaviour
         float time = 1f;
         Vector2 position = new Vector2(player.transform.position.x, player.transform.position.y + 2f);
         holdingTrack = Instantiate(track, position, Quaternion.identity);
-        holdingTrack.GetComponent<TrackScript>().skipped = true;
+
+        int skipChance = Random.Range(0, 10);
+        print("Skip chance " + skipChance);
+        holdingTrack.GetComponent<TrackScript>().skipped = skipChance <= skipChancePercentage;
         holdingTrack.GetComponent<SpriteRenderer>().sprite = points[currentPoint].GetComponentInParent<Laptop>().trackSprite;
         holdingTrack.transform.localScale = new Vector2(0, 0);
         float currentTime = 0.0f;

@@ -12,6 +12,7 @@ public class UserScript : MonoBehaviour
     private Rigidbody2D rb;
     private Sprite angry;
     public bool hasTrack;
+    public AudioClip[] skipSounds;
     void Start()
     {
         animator = GetComponent<Animator>();
