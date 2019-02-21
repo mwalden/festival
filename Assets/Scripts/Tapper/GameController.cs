@@ -20,6 +20,11 @@ public class GameController : MonoBehaviour
     private TapperUI ui;
     public bool showingUI;
     public Canvas uiCanvas;
+    public GameObject player;
+    public GameObject gameoverSprite;
+    //public GameObject gameoverSpriteAlpha;
+    public GameObject[] masks;
+    public GameObject dude;
 
 
     private void Start()
@@ -35,8 +40,10 @@ public class GameController : MonoBehaviour
     }
     private void Update()
     {
-        if (currentLevel == 5) {
+        if (currentLevel == 1)
+        {
             print("Game done");
+            setGameOverMasks();
             return;
         }
 
@@ -47,7 +54,7 @@ public class GameController : MonoBehaviour
         currentTimeLeft -= Time.deltaTime;
         if (currentTimeLeft < 0)
         {
-            foreach(GameObject spawner in userSpawners)
+            foreach (GameObject spawner in userSpawners)
             {
                 spawner.GetComponent<UserSpawner>().setTimerBeforeSpawn(100000);
             }
@@ -55,7 +62,7 @@ public class GameController : MonoBehaviour
             openUI();
             UserScript[] users = GameObject.FindObjectsOfType<UserScript>();
             int count = users.Length;
-            for(int x =0;x < count; x++)
+            for (int x = 0; x < count; x++)
             {
                 DestroyImmediate(users[x].gameObject);
             }
@@ -67,7 +74,7 @@ public class GameController : MonoBehaviour
         if (currentLevel == speedRatesPerLevel.Length)
             return;
         showingUI = true;
-        uiCanvas.gameObject.SetActive(true); 
+        uiCanvas.gameObject.SetActive(true);
         ui.showUI();
     }
 
@@ -86,5 +93,45 @@ public class GameController : MonoBehaviour
         }
         showingUI = false;
         currentLevel++;
+    }
+
+    void setGameOverMasks()
+    {
+        int point = player.GetComponent<PlayerController>().currentPoint;
+        gameoverSprite.gameObject.SetActive(true);
+        masks[point].gameObject.SetActive(true);
+        dude.transform.position = masks[point].transform.position;
+        StartCoroutine(exposeMask());
+        StartCoroutine(rotatePlayer());
+        foreach (GameObject spawner in userSpawners)
+        {
+            spawner.GetComponent<UserSpawner>().setTimerBeforeSpawn(1000000);
+        }
+    }
+    IEnumerator rotatePlayer()
+    {
+        float currentTime = 0.0f;
+        float time = 1;
+
+        Quaternion original = dude.transform.rotation;
+        Quaternion destination = new Quaternion(0, 0, -90, 0);
+        do
+        {
+            dude.transform.rotation = Quaternion.Lerp(original, destination, 1 - (time / currentTime));
+            yield return null;
+        } while (currentTime <= time);
+    }
+    IEnumerator exposeMask()
+    {
+        float alpha = 0;
+        float currentTime = 0.0f;
+        float time = 1;
+        do
+        {
+            alpha = Mathf.Lerp(0, 1, currentTime / time);
+            gameoverSprite.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, alpha);
+            currentTime += Time.deltaTime;
+            yield return null;
+        } while (currentTime <= time);
     }
 }
