@@ -8,11 +8,14 @@ public class UserScript : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private bool state;
     public float speed;
+    public Sprite happy;
     private Rigidbody2D rb;
+    private Sprite angry;
     void Start()
     {
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        angry = spriteRenderer.sprite;
         rb = GetComponent<Rigidbody2D>();
         rb.velocity = new Vector2(-speed, 0);
         animator.speed = .5f;
@@ -26,6 +29,16 @@ public class UserScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        if (collision.GetComponent<TrackScript>() == null)
+            return;
+
+        GameObject track = collision.gameObject;
+        track.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+        track.transform.parent = transform;
+        track.transform.position = new Vector2(transform.position.x, transform.position.y+.75f);
+        animator.enabled = false; 
+        spriteRenderer.sprite = happy;
+        collision.enabled = false;
+        rb.velocity = new Vector2(speed + 1, 0);
     }
 }
