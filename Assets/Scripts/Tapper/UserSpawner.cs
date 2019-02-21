@@ -5,7 +5,9 @@ using UnityEngine;
 public class UserSpawner : MonoBehaviour
 {
     public GameObject[] users;
+    [Tooltip("Spawn rate")]
     public float timerBeforeSpawn;
+    [Tooltip("Time left to spawn")]
     private float timeLeft;
     private float scaleSize;
     private List<GameObject> userList = new List<GameObject>();
@@ -31,5 +33,11 @@ public class UserSpawner : MonoBehaviour
             user.GetComponent<UserScript>().speed = userSpeed;
             timeLeft = timerBeforeSpawn + Random.Range(0,1);
         }
+    }
+
+    public void setTimerBeforeSpawn(float time)
+    {
+        timerBeforeSpawn = time;
+        timeLeft = timerBeforeSpawn;
     }
 }

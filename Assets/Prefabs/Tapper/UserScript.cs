@@ -11,6 +11,8 @@ public class UserScript : MonoBehaviour
     public Sprite happy;
     private Rigidbody2D rb;
     private Sprite angry;
+    public 
+
     void Start()
     {
         animator = GetComponent<Animator>();
