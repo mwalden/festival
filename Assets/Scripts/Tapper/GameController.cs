@@ -64,6 +64,8 @@ public class GameController : MonoBehaviour
     }
     public void openUI()
     {
+        if (currentLevel == speedRatesPerLevel.Length)
+            return;
         showingUI = true;
         uiCanvas.gameObject.SetActive(true); 
         ui.showUI();
@@ -72,7 +74,7 @@ public class GameController : MonoBehaviour
     public void closeUI()
     {
         uiCanvas.gameObject.SetActive(false);
-        currentLevel++;
+
         if (currentLevel < speedRatesPerLevel.Length)
         {
             foreach (GameObject spawner in userSpawners)
@@ -83,5 +85,6 @@ public class GameController : MonoBehaviour
             currentTimeLeft = levelTime[currentLevel];
         }
         showingUI = false;
+        currentLevel++;
     }
 }

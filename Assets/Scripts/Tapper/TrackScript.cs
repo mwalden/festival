@@ -7,6 +7,7 @@ public class TrackScript : MonoBehaviour
 
     public Sprite sprite;
     private SpriteRenderer spriteRenderer;
+    public bool skipped;
 
     // Start is called before the first frame update
     void Start()

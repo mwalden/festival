@@ -33,12 +33,13 @@ public class UserScript : MonoBehaviour
         if (collision.GetComponent<TrackScript>() == null)
             return;
 
-        float skipChance = Random.Range(0, 10);
-        //if (skipChance < 2)
-        //{
 
-        //}
-        //else
+        if (collision.GetComponent<TrackScript>().skipped)
+        {
+            collision.GetComponent<Rigidbody2D>().velocity = new Vector2(-collision.GetComponent<Rigidbody2D>().velocity.x,
+                collision.GetComponent<Rigidbody2D>().velocity.y);
+        }
+        else
         {
             hasTrack = true;
             GameObject track = collision.gameObject;

@@ -68,6 +68,7 @@ public class PlayerController : MonoBehaviour
         float time = 1f;
         Vector2 position = new Vector2(player.transform.position.x, player.transform.position.y + 2f);
         holdingTrack = Instantiate(track, position, Quaternion.identity);
+        holdingTrack.GetComponent<TrackScript>().skipped = true;
         holdingTrack.GetComponent<SpriteRenderer>().sprite = points[currentPoint].GetComponentInParent<Laptop>().trackSprite;
         holdingTrack.transform.localScale = new Vector2(0, 0);
         float currentTime = 0.0f;
