@@ -9,19 +9,21 @@ public class TrackScript : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     public bool skipped;
     public AudioClip[] skipSounds;
+    public AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        audioSource = GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void playSkippedTrackAudio()
     {
-        
+        AudioClip clip = skipSounds[Random.Range(0, skipSounds.Length - 1)];
+        audioSource.clip = clip;
+        audioSource.Play();
     }
 
-   
 
 }

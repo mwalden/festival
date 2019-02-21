@@ -54,9 +54,7 @@ public class PlayerController : MonoBehaviour
         {
             holdingTime = 0;
             StopAllCoroutines();
-            audioSource.clip = downloadSounds[audioNumber];
-            audioNumber++;
-            audioSource.Play();
+            audioSource.Stop();
             if (audioNumber >= downloadSounds.Length - 1)
                 audioNumber = 0;
             if (!currentHoldingTrack && holdingTrack != null)
@@ -80,6 +78,10 @@ public class PlayerController : MonoBehaviour
         float time = 1f;
         Vector2 position = new Vector2(player.transform.position.x, player.transform.position.y + 2f);
         holdingTrack = Instantiate(track, position, Quaternion.identity);
+
+        audioSource.clip = downloadSounds[audioNumber];
+        audioNumber++;
+        audioSource.Play();
 
         int skipChance = Random.Range(0, 10);
         print("Skip chance " + skipChance);

@@ -37,8 +37,10 @@ public class UserScript : MonoBehaviour
 
         if (collision.GetComponent<TrackScript>().skipped)
         {
+            collision.GetComponent<TrackScript>().playSkippedTrackAudio();
             collision.GetComponent<Rigidbody2D>().velocity = new Vector2(-collision.GetComponent<Rigidbody2D>().velocity.x,
                 collision.GetComponent<Rigidbody2D>().velocity.y);
+
         }
         else
         {
