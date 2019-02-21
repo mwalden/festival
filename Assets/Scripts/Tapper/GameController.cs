@@ -18,6 +18,9 @@ public class GameController : MonoBehaviour
     public float timeDelay;
     public float currentTimeDelay;
     private TapperUI ui;
+    public bool showingUI;
+    public Canvas uiCanvas;
+
 
     private void Start()
     {
@@ -37,20 +40,8 @@ public class GameController : MonoBehaviour
             return;
         }
 
-        if (currentTimeDelay > 0) {
-            currentTimeDelay -= Time.deltaTime;
-            if (currentTimeDelay < 0) {
-                currentLevel++;
-                if (currentLevel < 3)
-                {
-                    foreach (GameObject spawner in userSpawners)
-                    {
-                        spawner.GetComponent<UserSpawner>().userSpeed = speedRatesPerLevel[currentLevel];
-                        spawner.GetComponent<UserSpawner>().setTimerBeforeSpawn(spawnRatesByLevel[currentLevel]);
-                    }
-                    currentTimeLeft = levelTime[currentLevel];
-                }
-            }
+        if (showingUI)
+        {
             return;
         }
         currentTimeLeft -= Time.deltaTime;
@@ -61,11 +52,29 @@ public class GameController : MonoBehaviour
                 spawner.GetComponent<UserSpawner>().setTimerBeforeSpawn(100000);
             }
             currentTimeDelay = 100000;
+            openUI();
         }
+    }
+    public void openUI()
+    {
+        showingUI = true;
+        uiCanvas.gameObject.SetActive(true); 
+        ui.showUI();
     }
 
     public void closeUI()
     {
-
+        uiCanvas.gameObject.SetActive(false);
+        currentLevel++;
+        if (currentLevel < speedRatesPerLevel.Length)
+        {
+            foreach (GameObject spawner in userSpawners)
+            {
+                spawner.GetComponent<UserSpawner>().userSpeed = speedRatesPerLevel[currentLevel];
+                spawner.GetComponent<UserSpawner>().setTimerBeforeSpawn(spawnRatesByLevel[currentLevel]);
+            }
+            currentTimeLeft = levelTime[currentLevel];
+        }
+        showingUI = false;
     }
 }

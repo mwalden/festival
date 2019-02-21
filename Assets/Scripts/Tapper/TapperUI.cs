@@ -10,14 +10,10 @@ public class TapperUI : MonoBehaviour
     public Sprite[] images;
     public string[] messages;
     public int currentMessage;
-    public float timeToDisplay;
+    public GameObject panel;
 
-    public void close()
-    {
 
-    }
-
-    void showUI()
+    public void showUI()
     {
         image.sprite = images[currentMessage];
         message.text = messages[currentMessage];
