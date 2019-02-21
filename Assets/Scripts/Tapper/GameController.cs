@@ -25,7 +25,14 @@ public class GameController : MonoBehaviour
     //public GameObject gameoverSpriteAlpha;
     public GameObject[] masks;
     public GameObject dude;
+    private bool gameOver;
 
+    public AudioSource audioSource;
+    public AudioClip gameover;
+    public AudioClip song1;
+    public AudioClip song2;
+    public AudioClip song3;
+    public AudioClip song4;
 
     private void Start()
     {
@@ -42,8 +49,12 @@ public class GameController : MonoBehaviour
     {
         if (currentLevel == 1)
         {
-            print("Game done");
-            setGameOverMasks();
+            if (!gameOver)
+            {
+                print("Game done");
+                setGameOverMasks();
+                gameOver = true;
+            }
             return;
         }
 
@@ -112,12 +123,14 @@ public class GameController : MonoBehaviour
     {
         float currentTime = 0.0f;
         float time = 1;
+        float destination = 0;
 
-        Quaternion original = dude.transform.rotation;
-        Quaternion destination = new Quaternion(0, 0, -90, 0);
         do
         {
-            dude.transform.rotation = Quaternion.Lerp(original, destination, 1 - (time / currentTime));
+            destination = Mathf.Lerp(0, -90, currentTime / time);
+            dude.transform.rotation = Quaternion.Euler(0, 0, destination);
+            currentTime += Time.deltaTime;
+
             yield return null;
         } while (currentTime <= time);
     }
