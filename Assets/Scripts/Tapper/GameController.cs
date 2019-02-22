@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
@@ -26,9 +27,10 @@ public class GameController : MonoBehaviour
     public GameObject[] masks;
     public GameObject dude;
     private bool gameOver;
-
+    public Canvas gameoverCanvas;
     public AudioSource audioSource;
-    public AudioClip gameover;
+    public AudioClip gameoverAudio;
+    public AudioClip goodbye;
     public AudioClip song1;
     public AudioClip song2;
     public AudioClip song3;
@@ -53,6 +55,8 @@ public class GameController : MonoBehaviour
             {
                 print("Game done");
                 setGameOverMasks();
+                audioSource.clip = goodbye;
+                audioSource.Play();
                 gameOver = true;
             }
             return;
@@ -119,6 +123,7 @@ public class GameController : MonoBehaviour
             spawner.GetComponent<UserSpawner>().setTimerBeforeSpawn(1000000);
         }
     }
+
     IEnumerator rotatePlayer()
     {
         float currentTime = 0.0f;
@@ -133,6 +138,8 @@ public class GameController : MonoBehaviour
 
             yield return null;
         } while (currentTime <= time);
+        audioSource.clip = gameoverAudio;
+        audioSource.Play();
     }
     IEnumerator exposeMask()
     {
@@ -146,5 +153,6 @@ public class GameController : MonoBehaviour
             currentTime += Time.deltaTime;
             yield return null;
         } while (currentTime <= time);
+        gameoverCanvas.gameObject.SetActive(true);
     }
 }
