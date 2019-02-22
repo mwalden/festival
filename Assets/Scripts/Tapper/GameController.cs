@@ -27,6 +27,7 @@ public class GameController : MonoBehaviour
     public GameObject[] masks;
     public GameObject dude;
     private bool gameOver;
+    public bool startGameOver;
     public Canvas gameoverCanvas;
     public AudioSource audioSource;
     public AudioClip gameoverAudio;
@@ -49,7 +50,7 @@ public class GameController : MonoBehaviour
     }
     private void Update()
     {
-        if (currentLevel == 1)
+        if (startGameOver)
         {
             if (!gameOver)
             {
@@ -154,5 +155,13 @@ public class GameController : MonoBehaviour
             yield return null;
         } while (currentTime <= time);
         gameoverCanvas.gameObject.SetActive(true);
+    }
+
+    public void setGameOver()
+    {
+        if (!startGameOver)
+        {
+            startGameOver = true;
+        }
     }
 }
