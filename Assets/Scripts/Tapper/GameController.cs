@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
+    public int currentLevel;
     [Tooltip("User Spawners")]
     public GameObject[] userSpawners;
     [Tooltip("The speed per level that a user will move down the belt.")]
@@ -13,7 +14,7 @@ public class GameController : MonoBehaviour
     public float[] levelTime;
     [Tooltip("The spawn rate per level that a user will be created.")]
     public float[] spawnRatesByLevel;
-    public int currentLevel;
+
     public float currentTimeLeft;
     [Tooltip("The time that user spawns are delayed between levels")]
     public float timeDelay;
@@ -34,11 +35,16 @@ public class GameController : MonoBehaviour
     public AudioClip goodbye;
     public AudioSource backgroundAudioSource;
     public AudioClip[] backgroundSpeedMusic;
-
+    public AudioSource soundEffects;
+    public AudioClip godzilla;
+    public AudioClip alarm;
+    public GameObject gameoverColliders;
+    private bool playedGodzilla;
+    private bool playedAlert;
     private void Start()
     {
         currentLevel = 0;
-        currentTimeLeft = levelTime[0];
+        currentTimeLeft = 15;
         ui = GetComponent<TapperUI>();
         backgroundAudioSource.clip = backgroundSpeedMusic[0];
         backgroundAudioSource.Play();
@@ -69,6 +75,20 @@ public class GameController : MonoBehaviour
             return;
         }
         currentTimeLeft -= Time.deltaTime;
+        if (currentTimeLeft < 2 && currentLevel == 2 && !playedGodzilla)
+        {
+            playedGodzilla = true;
+            soundEffects.clip = godzilla;
+            soundEffects.Play();
+        }
+        if (currentTimeLeft < 4 && currentLevel == 4 && !playedAlert)
+        {
+            gameoverColliders.SetActive(true);
+            playedAlert = true;
+            soundEffects.clip = alarm;
+            soundEffects.Play();
+        }
+
         if (currentTimeLeft < 0)
         {
             foreach (GameObject spawner in userSpawners)

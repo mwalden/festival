@@ -37,12 +37,20 @@ public class PlayerController : MonoBehaviour
             {
                 currentPoint++;
             }
+            else
+            {
+                currentPoint = 0;
+            }
         }
         if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
         {
             if (currentPoint - 1 >= 0)
             {
                 currentPoint--;
+            }
+            else
+            {
+                currentPoint = points.Length - 1;
             }
         }
         if (Input.GetKeyDown(KeyCode.Space))
