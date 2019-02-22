@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
 
     private int audioNumber;
     [Tooltip("this value * 10 for the skip chance percentage")]
+    [Range(0,10)]
     public int skipChancePercentage;
 
     // Start is called before the first frame update

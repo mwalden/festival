@@ -115,6 +115,10 @@ public class GameController : MonoBehaviour
         }
         showingUI = false;
         currentLevel++;
+        if (currentLevel == 1)
+            player.GetComponent<PlayerController>().skipChancePercentage = 4;
+        else
+            player.GetComponent<PlayerController>().skipChancePercentage = 2;
     }
 
     void setGameOverMasks()
