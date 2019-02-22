@@ -23,12 +23,6 @@ public class UserScript : MonoBehaviour
         animator.speed = .5f;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.GetComponent<TrackScript>() == null)

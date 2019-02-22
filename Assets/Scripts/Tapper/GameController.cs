@@ -32,16 +32,16 @@ public class GameController : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip gameoverAudio;
     public AudioClip goodbye;
-    public AudioClip song1;
-    public AudioClip song2;
-    public AudioClip song3;
-    public AudioClip song4;
+    public AudioSource backgroundAudioSource;
+    public AudioClip[] backgroundSpeedMusic;
 
     private void Start()
     {
         currentLevel = 0;
         currentTimeLeft = levelTime[0];
         ui = GetComponent<TapperUI>();
+        backgroundAudioSource.clip = backgroundSpeedMusic[0];
+        backgroundAudioSource.Play();
         foreach (GameObject spawner in userSpawners)
         {
             spawner.GetComponent<UserSpawner>().userSpeed = speedRatesPerLevel[currentLevel];
