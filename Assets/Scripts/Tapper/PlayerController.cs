@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
     public bool currentHoldingTrack;
     public AudioSource audioSource;
     public AudioClip[] downloadSounds;
+    public Sprite drake;
+    public bool useDrake;
 
     private int audioNumber;
     [Tooltip("this value * 10 for the skip chance percentage")]
@@ -95,7 +97,7 @@ public class PlayerController : MonoBehaviour
         int skipChance = Random.Range(0, 20);
         print("Skip chance " + skipChance);
         holdingTrack.GetComponent<TrackScript>().skipped = skipChance <= skipChancePercentage;
-        holdingTrack.GetComponent<SpriteRenderer>().sprite = points[currentPoint].GetComponentInParent<Laptop>().trackSprite;
+        holdingTrack.GetComponent<SpriteRenderer>().sprite = useDrake?drake:points[currentPoint].GetComponentInParent<Laptop>().trackSprite;
         holdingTrack.transform.localScale = new Vector2(0, 0);
         float currentTime = 0.0f;
         Vector2 original = new Vector3(0, 0,0);

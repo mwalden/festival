@@ -81,13 +81,22 @@ public class GameController : MonoBehaviour
             soundEffects.clip = godzilla;
             soundEffects.Play();
         }
-        if (currentTimeLeft < 4 && currentLevel == 4 && !playedAlert)
+        if (currentLevel == 4)
         {
-            gameoverColliders.SetActive(true);
+            player.GetComponent<PlayerController>().useDrake = true;
+        }
+        else player.GetComponent<PlayerController>().useDrake = false;
+
+        if (currentTimeLeft < 2 && currentLevel == 4 && !playedAlert)
+        {
             playedAlert = true;
             soundEffects.clip = alarm;
             soundEffects.Play();
         }
+
+        if (currentLevel == 5)
+            gameoverColliders.SetActive(true);
+
 
         if (currentTimeLeft < 0)
         {
@@ -138,7 +147,7 @@ public class GameController : MonoBehaviour
         if (currentLevel == 1)
             player.GetComponent<PlayerController>().skipChancePercentage = 15;
         else
-            player.GetComponent<PlayerController>().skipChancePercentage = 1;
+            player.GetComponent<PlayerController>().skipChancePercentage = -1000;
         backgroundAudioSource.clip = backgroundSpeedMusic[currentLevel];
         backgroundAudioSource.Play();
     }
