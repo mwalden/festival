@@ -116,9 +116,11 @@ public class GameController : MonoBehaviour
         showingUI = false;
         currentLevel++;
         if (currentLevel == 1)
-            player.GetComponent<PlayerController>().skipChancePercentage = 4;
+            player.GetComponent<PlayerController>().skipChancePercentage = 15;
         else
-            player.GetComponent<PlayerController>().skipChancePercentage = 2;
+            player.GetComponent<PlayerController>().skipChancePercentage = 1;
+        backgroundAudioSource.clip = backgroundSpeedMusic[currentLevel];
+        backgroundAudioSource.Play();
     }
 
     void setGameOverMasks()
@@ -175,6 +177,7 @@ public class GameController : MonoBehaviour
         if (!startGameOver)
         {
             destroyUsers();
+            backgroundAudioSource.Stop();
             startGameOver = true;
 
         }

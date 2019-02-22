@@ -34,11 +34,14 @@ public class UserSpawner : MonoBehaviour
             timeLeft = timerBeforeSpawn + Random.Range(0,1);
         }
     }
-
+    //weee hacks! 
+    //this is so the cheating way of pausing the spawns will still work
     public void setTimerBeforeSpawn(float time)
     {
         timerBeforeSpawn = time;
-        timeLeft = timerBeforeSpawn;
+        if (time > 99999)
+            timeLeft = time;
+        else timeLeft = .5f;
     }
 
 

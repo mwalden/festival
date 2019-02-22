@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
 
     private int audioNumber;
     [Tooltip("this value * 10 for the skip chance percentage")]
-    [Range(0,10)]
+    [Range(0,20)]
     public int skipChancePercentage;
 
     // Start is called before the first frame update
@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour
         audioNumber++;
         audioSource.Play();
 
-        int skipChance = Random.Range(0, 10);
+        int skipChance = Random.Range(0, 20);
         print("Skip chance " + skipChance);
         holdingTrack.GetComponent<TrackScript>().skipped = skipChance <= skipChancePercentage;
         holdingTrack.GetComponent<SpriteRenderer>().sprite = points[currentPoint].GetComponentInParent<Laptop>().trackSprite;
