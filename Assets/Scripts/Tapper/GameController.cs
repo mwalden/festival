@@ -54,6 +54,7 @@ public class GameController : MonoBehaviour
         {
             if (!gameOver)
             {
+                destroyUsers();
                 print("Game done");
                 setGameOverMasks();
                 audioSource.clip = goodbye;
@@ -76,13 +77,18 @@ public class GameController : MonoBehaviour
             }
             currentTimeDelay = 100000;
             openUI();
-            UserScript[] users = GameObject.FindObjectsOfType<UserScript>();
-            int count = users.Length;
-            for (int x = 0; x < count; x++)
-            {
-                DestroyImmediate(users[x].gameObject);
-            }
+            destroyUsers();
+        }
+    }
 
+    void destroyUsers()
+    {
+        print("Destroying users");
+        UserScript[] users = GameObject.FindObjectsOfType<UserScript>();
+        int count = users.Length;
+        for (int x = 0; x < count; x++)
+        {
+            DestroyImmediate(users[x].gameObject);
         }
     }
     public void openUI()
@@ -114,6 +120,7 @@ public class GameController : MonoBehaviour
     void setGameOverMasks()
     {
         int point = player.GetComponent<PlayerController>().currentPoint;
+        dude.GetComponent<Animator>().enabled = false;
         gameoverSprite.gameObject.SetActive(true);
         masks[point].gameObject.SetActive(true);
         dude.transform.position = masks[point].transform.position;
@@ -128,7 +135,7 @@ public class GameController : MonoBehaviour
     IEnumerator rotatePlayer()
     {
         float currentTime = 0.0f;
-        float time = 1;
+        float time = 2;
         float destination = 0;
 
         do
@@ -141,6 +148,7 @@ public class GameController : MonoBehaviour
         } while (currentTime <= time);
         audioSource.clip = gameoverAudio;
         audioSource.Play();
+        gameoverCanvas.gameObject.SetActive(true);
     }
     IEnumerator exposeMask()
     {
@@ -154,14 +162,17 @@ public class GameController : MonoBehaviour
             currentTime += Time.deltaTime;
             yield return null;
         } while (currentTime <= time);
-        gameoverCanvas.gameObject.SetActive(true);
+
     }
 
     public void setGameOver()
     {
+        print("Setting game over ");
         if (!startGameOver)
         {
+            destroyUsers();
             startGameOver = true;
+
         }
     }
 }
